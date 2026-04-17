@@ -1,0 +1,57 @@
+# DARTS Configuration - Exact Paper Hyperparameters
+# Liu et al., ICLR 2019: "DARTS: Differentiable Architecture Search"
+
+dataset: cifar10
+
+# Search Phase
+search:
+  epochs: 50
+  batch_size: 64
+  num_channels: 16
+  num_cells: 8
+  learning_rate: 0.025
+  learning_rate_arch: 0.0003
+  momentum: 0.9
+  weight_decay: 0.0003
+  weight_decay_arch: 0.001
+  cutout_length: 16
+  auxiliary: false
+  unrolled: true  # Second-order (recommended for paper reproduction)
+
+# Evaluation Phase
+evaluation:
+  epochs: 600
+  batch_size: 96
+  num_channels: 36
+  num_cells: 20
+  learning_rate: 0.025
+  momentum: 0.9
+  weight_decay: 0.0003
+  cutout_length: 16
+  auxiliary: true
+  auxiliary_weight: 0.4
+  dropout: 0.2
+
+# Reproducibility
+seed: 42
+seeds: [42, 123, 456, 789, 101112]  # For multiple runs
+num_runs: 5
+
+# Data
+data_root: ./data
+num_workers: 4
+
+# Model
+genotype: DARTS_V2  # Target genotype for comparison
+
+# Paper Reference Results
+paper_results:
+  cifar10:
+    error_test: 2.76
+    error_std: 0.09
+    params_millions: 3.3
+    search_gpu_days: 4
+  cifar100:
+    error_test: 15.92
+    error_std: 0.14
+    params_millions: 3.3
